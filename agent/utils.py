@@ -160,6 +160,8 @@ def get_text_contents(messages: list[AgentMessage]) -> list[AgentMessage]:
 def adjusted_effort(model: str, effort: str) -> str | Omit:
     if "gpt-4" in model:
         return Omit()
+    if "$" in model:  # openwebui model, reasoning support is unknown per-model, so omit it
+        return Omit()
     if effort in ("none", "minimal"):
         if "codex" in model:
             return "low"
