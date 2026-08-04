@@ -295,6 +295,10 @@ class AgentCog(AgentCogCommands, AgentCogConfigCommands):
                 temp_memories.remove(memory)
                 memories_to_recall.add(memory)
 
+        if not temp_memories:
+            recalled_memories = {k: v for k, v in config.memory.value.items() if k in memories_to_recall}
+            return recalled_memories or {}
+
         temp_memories_str = ", ".join(temp_memories)
         system_content = config.prompt_recaller.value.format(temp_memories_str)
         system_prompt = {
